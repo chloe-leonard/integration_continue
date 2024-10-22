@@ -37,8 +37,8 @@ jobs:
 
           - name: Configuration de git
             run: |
-                git config user.name "chloe-leonard"
-                git config user.email "chloe.leonard@epsi.fr"
+                git config --global user.name "chloe-leonard"
+                git config --global user.email "chloe.leonard@epsi.fr"
                 
                 
           - name: Verification branche main
