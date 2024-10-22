@@ -29,16 +29,23 @@ jobs:
         runs-on: ubuntu-latest
         if: success()
         steps:
-          - name: Checkout code from dev
+
+          - name: Verification de la branche dev
             uses: actions/checkout@v2
             with:
-              ref: dev
+              fetch-depth: 0
 
-          - name: Merge dans main
+          - name: Configuration de git
             run: |
                 git config --global user.name "github-actions[bot]"
                 git config --global user.email "github-actions[bot]@users.noreply.github.com"
-                git checkout main
+                
+                
+          - name: Verification branche main
+            run: git checkout main
+
+          - name: Merge de dev dans main
+            run: |
                 git merge dev
                 git push origin main 
             env: 
@@ -52,8 +59,6 @@ jobs:
         steps:
           - name: Deploiement sur Heroku
             run: |
-                git remote add heroku https://git.heroku.com/integration_continue.git
-                git push heroku main
-            env:
-                HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+                echo "connexion à Heroku"
+           
 
