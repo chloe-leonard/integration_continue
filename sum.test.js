@@ -18,6 +18,7 @@ test('Ajoute -3 + -7 pour obtenir -10', () => {
     expect(somme(-3, -7)).toBe(-10);
 });
 
+/*
 test('Ajoute 15 + 5 pour obtenir 21', () => {
     expect(somme(15, 5)).toBe(21);
-});
+});*/

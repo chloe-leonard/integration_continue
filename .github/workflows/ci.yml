@@ -11,16 +11,30 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-            - name: Checkout code
+            - name: Verification du code
               uses: actions/checkout@v2
 
-            - name: Setup Node.js
+            - name: Configuration de Node.js
               uses: actions/setup-node@v2
               with:
                 node-version: '14'
 
-            - name: Install dependencies
+            - name: Installation des dependances
               run: npm install
 
-            - name: Run tests
+            - name: Lancement des tests
               run: npm test
+
+    deploy:
+        needs: build
+        runs-on: ubuntu-latest
+        if: success()
+
+        steps:
+            - name: Deploiement sur Heroku
+            run: |
+                git remote add heroku https://git.heroku.com/integration_continue.git
+                git push heroku main
+            env:
+                HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+
