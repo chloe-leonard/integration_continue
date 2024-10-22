@@ -29,6 +29,11 @@ jobs:
         runs-on: ubuntu-latest
         if: success()
         steps:
+          - name: Checkout code from dev
+            uses: actions/checkout@v2
+            with:
+              ref: dev
+
           - name: Merge dans main
             run: |
                 git config --global user.name "github-actions[bot]"
