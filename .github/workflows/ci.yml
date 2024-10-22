@@ -2,7 +2,7 @@ name: CI_testSomme
 
 on:
     push:
-        branches: main
+        branches: dev
     pull_request:
         branches: main
 
@@ -24,17 +24,29 @@ jobs:
 
             - name: Lancement des tests
               run: npm test
+    merge:
+        needs: build  
+        runs-on: ubuntu-latest
+        if: success()
+        steps:
+          - name: Merge dans main
+            run: |
+                git config --global user.name "github-actions[bot]"
+                git config --global user.email "github-actions[bot]@users.noreply.github.com"
+                git checkout main
+                git merge dev
+                git push origin main 
 
-#    deploy:
-#        needs: build
-#        runs-on: ubuntu-latest
-#        if: success()
 
-#        steps:
-#          - name: Deploiement sur Heroku
-#            run: |
-#                git remote add heroku https://git.heroku.com/integration_continue.git
-#                git push heroku main
-#            env:
-#                HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+    deploy:
+        needs: build
+        runs-on: ubuntu-latest
+        if: success()
+        steps:
+          - name: Deploiement sur Heroku
+            run: |
+                git remote add heroku https://git.heroku.com/integration_continue.git
+                git push heroku main
+            env:
+                HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
 
