@@ -33,7 +33,7 @@ jobs:
           - name: Verification de la branche dev
             uses: actions/checkout@v2
             with:
-              fetch-depth: 0
+              ref: dev
 
           - name: Configuration de git
             run: |
